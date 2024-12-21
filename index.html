@@ -6,6 +6,7 @@
     <meta name="description" content="Enter Jaadu's Realm - A magical community for programming and learning">
     <title>Jaadu's Realm - A Magical Community</title>
     <style>
+        /* Animation Keyframes */
         @keyframes floatAnimation {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             25% { transform: translateY(-15px) rotate(2deg); }
@@ -17,14 +18,14 @@
             50% { filter: drop-shadow(0 0 30px rgba(224, 86, 253, 0.8)); }
         }
 
-        @keyframes magicSparkle {
-            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1) rotate(180deg); }
-        }
-
         @keyframes borderFlow {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
+        }
+
+        @keyframes magicSparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
         }
 
         :root {
@@ -43,8 +44,9 @@
             font-family: 'Inter', sans-serif;
             color: #ffffff;
             min-height: 100vh;
-            background: url('/api/placeholder/1920/1080') center/cover fixed;
+            background: url('image.webp') center/cover fixed;
             overflow-x: hidden;
+            perspective: 1000px;
         }
 
         .container {
@@ -52,11 +54,15 @@
             margin: 0 auto;
             padding: 0 20px;
             position: relative;
+            z-index: 2;
         }
 
+        /* Header Styles */
         header {
             padding: 100px 20px;
             text-align: center;
+            position: relative;
+            perspective: 1000px;
         }
 
         .hero-title {
@@ -66,27 +72,38 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: glowPulse 3s infinite;
+            transform-style: preserve-3d;
+            transform: translateZ(50px);
         }
 
+        .hero-subtitle {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 20px auto 40px;
+            color: #e0e0e0;
+            transform: translateZ(30px);
+        }
+
+        /* Features Section */
         .features-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 40px;
-            padding: 40px 0;
-            position: relative;
+            padding: 40px 20px;
+            perspective: 1000px;
         }
 
         .feature {
-            width: 300px;
-            padding: 30px;
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
+            padding: 40px 30px;
             border-radius: 20px;
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
-            animation: floatAnimation 6s infinite ease-in-out;
             transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+            animation: floatAnimation 6s infinite ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .feature:nth-child(2) {
@@ -97,82 +114,48 @@
             animation-delay: -4s;
         }
 
+        .feature:hover {
+            transform: translateZ(50px) scale(1.05);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(0, 247, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
         .feature::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent
-            );
-            transform: rotate(45deg);
+            inset: 0;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
             animation: borderFlow 3s linear infinite;
         }
 
         .feature-icon {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
-            display: inline-block;
-            position: relative;
-        }
-
-        .feature-icon::after {
-            content: '✨';
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0;
-            animation: magicSparkle 2s infinite;
+            display: block;
+            transform: translateZ(20px);
         }
 
         .feature-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 15px;
             background: linear-gradient(45deg, #fff, var(--glow-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            position: relative;
+            transform: translateZ(15px);
         }
 
         .feature-description {
-            font-size: 1.1rem;
+            color: #e0e0e0;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-            position: relative;
-            z-index: 2;
+            transform: translateZ(10px);
         }
 
-        .magic-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--glow-blue);
-            border-radius: 50%;
-            animation: particleFloat 4s infinite;
-        }
-
-        @keyframes particleFloat {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(var(--x, 100px), var(--y, -100px)) scale(1.5);
-                opacity: 1;
-            }
-        }
-
+        /* Join Button */
         .join-button {
             display: inline-block;
             padding: 20px 40px;
@@ -182,40 +165,89 @@
             background: linear-gradient(45deg, var(--glow-purple), var(--glow-blue));
             border-radius: 50px;
             text-decoration: none;
-            margin-top: 40px;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            transform: translateZ(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .join-button:hover {
-            transform: scale(1.05);
+            transform: translateZ(40px) scale(1.05);
             box-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
         }
 
-        .join-button::before {
-            content: '';
+        /* Notice Banner */
+        .notice-banner {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(13, 15, 20, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transform: translateX(400px);
+            animation: slideIn 0.5s forwards 1s ease-out;
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+        }
+
+        @keyframes slideIn {
+            to { transform: translateX(0); }
+        }
+
+        .notice-title {
+            font-size: 1.2rem;
+            color: var(--glow-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .notice-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .notice-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(45deg, var(--glow-purple), var(--glow-blue));
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .notice-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 247, 255, 0.4);
+        }
+
+        .close-notice {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-            animation: borderFlow 3s linear infinite;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            transition: color 0.3s ease;
         }
 
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 3rem;
-            }
-
-            .feature {
-                width: 100%;
-                max-width: 350px;
-            }
+        .close-notice:hover {
+            color: white;
         }
 
-        /* Create random floating particles */
+        /* Floating Particles */
         .particles-container {
             position: fixed;
             top: 0;
@@ -248,6 +280,27 @@
                 opacity: 0;
             }
         }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+
+            .notice-banner {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -258,6 +311,7 @@
     <header>
         <div class="container">
             <h1 class="hero-title">Enter Jaadu's Realm</h1>
+            <p class="hero-subtitle">Step into a magical world where programming meets enchantment, and learning becomes an adventure.</p>
             <a href="https://discord.gg/3XbwPs9WZF" class="join-button" target="_blank">Begin Your Journey ✨</a>
         </div>
     </header>
@@ -284,6 +338,19 @@
         </div>
     </main>
 
+    <div class="notice-banner">
+        <button class="close-notice">×</button>
+        <div class="notice-title">
+            <span>✨</span> Special Offer
+        </div>
+        <div class="notice-content">
+            Create your own stunning website for FREE! Join our server and unlock access to web development resources and support.
+        </div>
+        <a href="https://discord.gg/3XbwPs9WZF" class="notice-button" target="_blank">
+            Learn More →
+        </a>
+    </div>
+
     <script>
         // Create floating particles
         function createParticles() {
@@ -294,7 +361,6 @@
                 const particle = document.createElement('div');
                 particle.className = 'magic-particle';
                 
-                // Random starting and ending positions
                 const startX = Math.random() * window.innerWidth;
                 const endX = startX + (Math.random() - 0.5) * 200;
                 
@@ -303,7 +369,6 @@
                 particle.style.setProperty('--maxOpacity', Math.random() * 0.8 + 0.2);
                 particle.style.left = `${startX}px`;
                 
-                // Random animation duration and delay
                 const duration = 5 + Math.random() * 10;
                 const delay = Math.random() * -20;
                 particle.style.animationDuration = `${duration}s`;
@@ -315,6 +380,11 @@
 
         // Initialize particles
         createParticles();
+
+        // Notice banner close functionality
+        document.querySelector('.close-notice').addEventListener('click', function() {
+            document.querySelector('.notice-banner').style.display = 'none';
+        });
     </script>
 </body>
 </html>
