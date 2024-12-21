@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Enter Jaadu's Realm - A magical community for programming and learning">
+    <title>Jaadu's Realm - A Magical Community</title>
+    <style>
+        @keyframes floatAnimation {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(2deg); }
+            75% { transform: translateY(15px) rotate(-2deg); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(0, 247, 255, 0.5)); }
+            50% { filter: drop-shadow(0 0 30px rgba(224, 86, 253, 0.8)); }
+        }
+
+        @keyframes magicSparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+
+        @keyframes borderFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        :root {
+            --glow-blue: #00f7ff;
+            --glow-purple: #e056fd;
+            --card-bg: rgba(13, 15, 20, 0.45);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            background: url('/api/placeholder/1920/1080') center/cover fixed;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        header {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, var(--glow-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glowPulse 3s infinite;
+        }
+
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .feature {
+            width: 300px;
+            padding: 30px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: floatAnimation 6s infinite ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .feature:nth-child(2) {
+            animation-delay: -2s;
+        }
+
+        .feature:nth-child(3) {
+            animation-delay: -4s;
+        }
+
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: borderFlow 3s linear infinite;
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '✨';
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: magicSparkle 2s infinite;
+        }
+
+        .feature-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #fff, var(--glow-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .feature-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 2;
+        }
+
+        .magic-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--glow-blue);
+            border-radius: 50%;
+            animation: particleFloat 4s infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(var(--x, 100px), var(--y, -100px)) scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        .join-button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(45deg, var(--glow-purple), var(--glow-blue));
+            border-radius: 50px;
+            text-decoration: none;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .join-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
+        }
+
+        .join-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+            animation: borderFlow 3s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .feature {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+
+        /* Create random floating particles */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .magic-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--glow-blue);
+            border-radius: 50%;
+            animation: particleRise 10s infinite linear;
+        }
+
+        @keyframes particleRise {
+            0% {
+                transform: translate(var(--startX, 0), 100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: var(--maxOpacity, 0.8);
+            }
+            100% {
+                transform: translate(var(--endX, 0), -100px) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container">
+        <!-- Particles will be added via JavaScript -->
+    </div>
+
+    <header>
+        <div class="container">
+            <h1 class="hero-title">Enter Jaadu's Realm</h1>
+            <a href="https://discord.gg/3XbwPs9WZF" class="join-button" target="_blank">Begin Your Journey ✨</a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="features-container">
+            <div class="feature">
+                <span class="feature-icon">🌟</span>
+                <h2 class="feature-title">Magic of Code</h2>
+                <p class="feature-description">Unlock the secrets of programming through mystical algorithms and enchanted functions.</p>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">📚</span>
+                <h2 class="feature-title">Knowledge Nexus</h2>
+                <p class="feature-description">Channel the wisdom of ancient developers and modern mages alike.</p>
+            </div>
+
+            <div class="feature">
+                <span class="feature-icon">✨</span>
+                <h2 class="feature-title">Creative Alchemy</h2>
+                <p class="feature-description">Transform raw ideas into digital gold through the art of magical creation.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'magic-particle';
+                
+                // Random starting and ending positions
+                const startX = Math.random() * window.innerWidth;
+                const endX = startX + (Math.random() - 0.5) * 200;
+                
+                particle.style.setProperty('--startX', `${startX}px`);
+                particle.style.setProperty('--endX', `${endX}px`);
+                particle.style.setProperty('--maxOpacity', Math.random() * 0.8 + 0.2);
+                particle.style.left = `${startX}px`;
+                
+                // Random animation duration and delay
+                const duration = 5 + Math.random() * 10;
+                const delay = Math.random() * -20;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+    </script>
+</body>
+</html>
